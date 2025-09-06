@@ -6,7 +6,7 @@ classes = ['cardboard', 'food', 'glass','metal','paper', 'plastic', 'textiles','
 num_classes=len(classes)
 
 # image size
-my_img_size = (128, 128)
+my_img_size = (224, 224)
 my_batch_size = 32
 
 #training data - normalize data + augmentation
@@ -14,7 +14,11 @@ train_datagen = ImageDataGenerator(
     rescale=1.0/255,
     rotation_range=20,
     zoom_range=0.2,
-    horizontal_flip=True
+    horizontal_flip=True,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    brightness_range=[0.8,1.2]
 )
 
 #get training data
@@ -35,22 +39,39 @@ test_data = test_datagen.flow_from_directory(
     batch_size=my_batch_size,
     class_mode="categorical"
 )
+#mobilenetv2 base model
+base_model = tf.keras.applications.MobileNetV2(
+    input_shape=(224,224,3),
+    include_top=False,
+    weights="imagenet"
+)
+#freeze base model
+base_model.trainable = False
 
 #building the model
+
 model = tf.keras.models.Sequential([
-    tf.keras.layers.Conv2D(32, (3, 3), activation="relu", input_shape=(128, 128, 3)),
-    tf.keras.layers.MaxPooling2D(2, 2),
-
-    tf.keras.layers.Conv2D(64, (3, 3), activation="relu"),
-    tf.keras.layers.MaxPooling2D(2, 2),
-
-    tf.keras.layers.Conv2D(128, (3, 3), activation="relu"),
-    tf.keras.layers.MaxPooling2D(2, 2),
-
-    tf.keras.layers.Flatten(),
+    base_model,
+    tf.keras.layers.GlobalAveragePooling2D(),
     tf.keras.layers.Dense(128, activation="relu"),
+    tf.keras.layers.Dropout(0.5),
     tf.keras.layers.Dense(num_classes, activation="softmax")
 ])
+
+# model = tf.keras.models.Sequential([
+#     tf.keras.layers.Conv2D(32, (3, 3), activation="relu", input_shape=(128, 128, 3)),
+#     tf.keras.layers.MaxPooling2D(2, 2),
+#
+#     tf.keras.layers.Conv2D(64, (3, 3), activation="relu"),
+#     tf.keras.layers.MaxPooling2D(2, 2),
+#
+#     tf.keras.layers.Conv2D(128, (3, 3), activation="relu"),
+#     tf.keras.layers.MaxPooling2D(2, 2),
+#
+#     tf.keras.layers.Flatten(),
+#     tf.keras.layers.Dense(128, activation="relu"),
+#     tf.keras.layers.Dense(num_classes, activation="softmax")
+# ])
 
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
@@ -58,7 +79,7 @@ model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accur
 model.fit(train_data, validation_data=test_data, epochs=10)
 
 # save trained model
-model.save("model.h5")
+model.save("model1.h5")
 
 loss, accuracy = model.evaluate(test_data)
 print("Test accuracy: ", accuracy)
