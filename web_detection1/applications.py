@@ -10,7 +10,7 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT,600) #height
 cap.set(cv2.CAP_PROP_BRIGHTNESS,100) #brightness
 
 classNames = []
-with open('objects.txt','r') as f:
+with open('objects.txt', 'r') as f:
     classNames = f.read().splitlines()
 print(classNames)
 
