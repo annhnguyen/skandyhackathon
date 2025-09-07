@@ -27,9 +27,10 @@ def home():
         <title>Trash Classifier</title>
     </head>
     <body>
-        <h2 id="upload">Upload Trash Image</h2>
+        <h2 id="upload">Trash Classifer.</h2>
         <input type="file" id="fileInput" accept="image/*">
-        <button onclick="uploadImage()">Predict</button>
+        <label for="fileInput" class="fileLabel">Upload Trash</label>
+        <button class="predictButton" onclick="uploadImage()">Predict Trash Type</button>
         <p id="result"></p>
 
         <script>

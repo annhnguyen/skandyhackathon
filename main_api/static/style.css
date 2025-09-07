@@ -1,3 +1,71 @@
+body {
+    background: #475C27;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
 #upload {
-    color:black;
+    color:white;
+    font-family: 'Lora', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    margin-top: 100px;
+    max-width: 100vw;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+#result {
+    font-color: white;
+    font-size: 30px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    width: 75%;
+    height: 15%;
+}
+
+#fileInput {
+    display: none;
+}
+
+.fileLabel {
+    background-color: #D9D9D9;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 75%;
+    height: 55%;
+    display: flex;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: #7D7D7D;
+    justify-content: center;
+    align-items: center;
+}
+.fileLabel:hover {
+    background-color: #B5B5B5;
+}
+
+.predictButton {
+    font-family: 'Lora';
+    font-size: 20px;
+    font-style: italic;
+    width: 75%;
+    height: 10%;
+    border-width: 0;
+    margin-top: 10;
+    border-radius: 10px;
+    color: #757a6c;
+    box-shadow: 0px 3px 10px 1px rgba(0,0,0,0.32);
+}
+
+.predictButton:hover {
+    background-color: #B5B5B5;
+    color: #F3FFE4;
+    font-size: 21px;
 }
