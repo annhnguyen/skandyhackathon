@@ -30,7 +30,7 @@ def home():
         <h2 id="upload">Trash Classifer.</h2>
         <input type="file" id="fileInput" accept="image/*">
         <label for="fileInput" class="fileLabel">Upload Trash</label>
-        <button class="predictButton" onclick="uploadImage()">Predict Trash Type</button>
+        <button class="predictButton" id="myPredictBtn" onclick="uploadImage()">Predict Trash Type</button>
         <p id="result"></p>
 
         <script>
@@ -50,7 +50,7 @@ def home():
             });
 
             const result = await response.json();
-            document.getElementById("result").innerText =
+            document.getElementById("myPredictBtn").innerText =
                 `Prediction: ${result.class} (confidence: ${(result.confidence * 100).toFixed(2)}%)`;
         }
         </script>
